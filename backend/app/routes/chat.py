@@ -72,9 +72,7 @@ async def chat(
     )
 
     try:
-        # -----------------------------------------
         # RUN AI ROUTER
-        # -----------------------------------------
 
         result = router_agent.invoke(
             {
@@ -97,9 +95,7 @@ async def chat(
         agent = result["agent"]
         sources = result["sources"]
 
-        # -----------------------------------------
         # SAVE USER MESSAGE
-        # -----------------------------------------
 
         create_message(
             db=db,
@@ -108,9 +104,7 @@ async def chat(
             content=request.question,
         )
 
-        # -----------------------------------------
         # GENERATE CONVERSATION TITLE
-        # -----------------------------------------
 
         if conversation.title == "New Conversation":
             generate_conversation_title(
@@ -119,9 +113,7 @@ async def chat(
                 question=request.question,
             )
 
-        # -----------------------------------------
         # SAVE ASSISTANT MESSAGE
-        # -----------------------------------------
 
         create_message(
             db=db,
@@ -130,17 +122,13 @@ async def chat(
             content=answer,
         )
 
-        # -----------------------------------------
         # CALCULATE RESPONSE TIME
-        # -----------------------------------------
 
         duration_ms = int(
             (time.perf_counter() - start_time) * 1000
         )
 
-        # -----------------------------------------
         # CREATE AUDIT LOG
-        # -----------------------------------------
 
         create_audit_log(
             db=db,
@@ -154,9 +142,7 @@ async def chat(
             duration_ms=duration_ms,
         )
 
-        # -----------------------------------------
         # CREATE KAFKA EVENT
-        # -----------------------------------------
 
         chat_event = create_chat_event(
             user_id=current_user.id,
@@ -168,17 +154,13 @@ async def chat(
             duration_ms=duration_ms,
         )
 
-        # -----------------------------------------
         # PUBLISH EVENT TO KAFKA
-        # -----------------------------------------
 
         event_producer.publish_chat_event(
             chat_event
         )
 
-        # -----------------------------------------
         # RETURN RESPONSE
-        # -----------------------------------------
 
         return {
             "question": request.question,
@@ -189,9 +171,7 @@ async def chat(
         }
 
     except Exception:
-        # -----------------------------------------
         # FAILED REQUEST AUDIT LOG
-        # -----------------------------------------
 
         duration_ms = int(
             (time.perf_counter() - start_time) * 1000

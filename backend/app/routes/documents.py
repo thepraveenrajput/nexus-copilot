@@ -24,9 +24,7 @@ UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 
-# ------------------------------------------------------
 # UPLOAD DOCUMENT
-# ------------------------------------------------------
 
 @router.post("/upload")
 async def upload_document(
@@ -34,9 +32,7 @@ async def upload_document(
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
-    # --------------------------------------------------
     # VALIDATE FILE TYPE
-    # --------------------------------------------------
 
     if not file.filename:
         return {
@@ -60,9 +56,7 @@ async def upload_document(
             "filename": safe_filename,
         }
 
-    # --------------------------------------------------
     # USER-SPECIFIC STORAGE DIRECTORY
-    # --------------------------------------------------
 
     user_upload_dir = (
         UPLOAD_DIR / str(current_user.id)
@@ -73,9 +67,7 @@ async def upload_document(
         exist_ok=True,
     )
 
-    # --------------------------------------------------
     # HANDLE EXISTING DOCUMENT
-    # --------------------------------------------------
 
     existing_document = (
         db.query(Document)
@@ -108,9 +100,7 @@ async def upload_document(
         db.delete(existing_document)
         db.commit()
 
-    # --------------------------------------------------
     # CREATE DOCUMENT RECORD FIRST
-    # --------------------------------------------------
 
     document = Document(
         filename=safe_filename,
@@ -124,18 +114,14 @@ async def upload_document(
     db.commit()
     db.refresh(document)
 
-    # --------------------------------------------------
     # PHYSICAL FILE PATH
-    # --------------------------------------------------
 
     file_path = (
         user_upload_dir
         / f"{document.id}_{safe_filename}"
     )
 
-    # --------------------------------------------------
     # SAVE FILE
-    # --------------------------------------------------
 
     try:
         file_content = await file.read()
@@ -163,9 +149,7 @@ async def upload_document(
             "error": str(e),
         }
 
-    # --------------------------------------------------
     # INGEST DOCUMENT
-    # --------------------------------------------------
 
     try:
 
@@ -228,9 +212,7 @@ async def upload_document(
             "error": str(e),
         }
 
-    # --------------------------------------------------
     # SUCCESS
-    # --------------------------------------------------
 
     return {
         "message": (
@@ -244,9 +226,7 @@ async def upload_document(
     }
 
 
-# ------------------------------------------------------
 # LIST DOCUMENTS
-# ------------------------------------------------------
 
 @router.get("")
 def list_documents(
@@ -277,9 +257,7 @@ def list_documents(
     ]
 
 
-# ------------------------------------------------------
 # DELETE DOCUMENT
-# ------------------------------------------------------
 
 @router.delete("/{document_id}")
 def delete_document(
@@ -302,18 +280,14 @@ def delete_document(
             "document_id": document_id,
         }
 
-    # --------------------------------------------------
     # DELETE QDRANT VECTORS
-    # --------------------------------------------------
 
     delete_document_chunks(
         qdrant_client=qdrant_client,
         document_id=document.id,
     )
 
-    # --------------------------------------------------
     # DELETE PHYSICAL FILE
-    # --------------------------------------------------
 
     file_path = (
         UPLOAD_DIR
@@ -324,9 +298,7 @@ def delete_document(
     if file_path.exists():
         file_path.unlink()
 
-    # --------------------------------------------------
     # DELETE DATABASE RECORD
-    # --------------------------------------------------
 
     db.delete(document)
     db.commit()

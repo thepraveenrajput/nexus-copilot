@@ -7,9 +7,7 @@ from langgraph.graph import StateGraph, END
 from ollama import chat
 
 
-# ============================================================
 # DATABASE
-# ============================================================
 
 engine = create_engine(
     DATABASE_URL,
@@ -17,9 +15,7 @@ engine = create_engine(
 )
 
 
-# ============================================================
 # STATE
-# ============================================================
 
 class SQLState(TypedDict):
     question: str
@@ -27,9 +23,7 @@ class SQLState(TypedDict):
     answer: str
 
 
-# ============================================================
 # DATABASE SCHEMA
-# ============================================================
 
 SCHEMA = """
 users(
@@ -69,17 +63,13 @@ messages(
 """
 
 
-# ============================================================
 # DETERMINISTIC SQL
-# ============================================================
 
 def deterministic_sql(question: str):
 
     q = question.lower().strip()
 
-    # --------------------------------------------------------
     # ACTIVE USERS
-    # --------------------------------------------------------
 
     if (
         "how many active users" in q
@@ -96,9 +86,7 @@ def deterministic_sql(question: str):
             "WHERE is_active = TRUE"
         )
 
-    # --------------------------------------------------------
     # INACTIVE USERS
-    # --------------------------------------------------------
 
     if (
         "how many inactive users" in q
@@ -115,9 +103,7 @@ def deterministic_sql(question: str):
             "WHERE is_active = FALSE"
         )
 
-    # --------------------------------------------------------
     # TOTAL USERS
-    # --------------------------------------------------------
 
     if (
         "how many users" in q
@@ -138,9 +124,7 @@ def deterministic_sql(question: str):
             "FROM users"
         )
 
-    # --------------------------------------------------------
     # DOCUMENTS
-    # --------------------------------------------------------
 
     if (
         "how many documents" in q
@@ -156,9 +140,7 @@ def deterministic_sql(question: str):
             "FROM documents"
         )
 
-    # --------------------------------------------------------
     # CONVERSATIONS
-    # --------------------------------------------------------
 
     if (
         "how many conversations" in q
@@ -177,17 +159,13 @@ def deterministic_sql(question: str):
     return None
 
 
-# ============================================================
 # LLM SQL GENERATION
-# ============================================================
 
 def generate_sql(state: SQLState):
 
     question = state["question"]
 
-    # --------------------------------------------------------
     # FIRST: DETERMINISTIC RULES
-    # --------------------------------------------------------
 
     deterministic = deterministic_sql(question)
 
@@ -196,9 +174,7 @@ def generate_sql(state: SQLState):
             "sql": deterministic
         }
 
-    # --------------------------------------------------------
     # LLM FALLBACK
-    # --------------------------------------------------------
 
     prompt = f"""
 You are a PostgreSQL SQL generator for an enterprise AI assistant.
@@ -252,9 +228,7 @@ User question:
 
     sql = response["message"]["content"].strip()
 
-    # --------------------------------------------------------
     # REMOVE MARKDOWN
-    # --------------------------------------------------------
 
     sql = re.sub(
         r"```(?:sql|postgresql)?",
@@ -270,9 +244,7 @@ User question:
     }
 
 
-# ============================================================
 # SQL VALIDATION
-# ============================================================
 
 def validate_sql(sql: str) -> bool:
 
@@ -281,9 +253,7 @@ def validate_sql(sql: str) -> bool:
 
     sql = sql.strip()
 
-    # --------------------------------------------------------
     # REMOVE ONE TRAILING SEMICOLON
-    # --------------------------------------------------------
 
     if sql.endswith(";"):
         sql = sql[:-1].strip()
@@ -291,9 +261,7 @@ def validate_sql(sql: str) -> bool:
     if not sql:
         return False
 
-    # --------------------------------------------------------
     # ONLY SELECT
-    # --------------------------------------------------------
 
     if not re.match(
         r"^select\b",
@@ -302,16 +270,12 @@ def validate_sql(sql: str) -> bool:
     ):
         return False
 
-    # --------------------------------------------------------
     # NO MULTIPLE STATEMENTS
-    # --------------------------------------------------------
 
     if ";" in sql:
         return False
 
-    # --------------------------------------------------------
     # NO COMMENTS
-    # --------------------------------------------------------
 
     if "--" in sql:
         return False
@@ -322,9 +286,7 @@ def validate_sql(sql: str) -> bool:
     if "*/" in sql:
         return False
 
-    # --------------------------------------------------------
     # BLOCK DANGEROUS SQL KEYWORDS
-    # --------------------------------------------------------
 
     forbidden_pattern = re.compile(
         r"\b("
@@ -346,9 +308,7 @@ def validate_sql(sql: str) -> bool:
     if forbidden_pattern.search(sql):
         return False
 
-    # --------------------------------------------------------
     # ONLY ALLOW KNOWN TABLES
-    # --------------------------------------------------------
 
     allowed_tables = {
         "users",
@@ -373,9 +333,7 @@ def validate_sql(sql: str) -> bool:
     return True
 
 
-# ============================================================
 # SQL EXECUTION
-# ============================================================
 
 def execute_sql(state: SQLState):
 
@@ -413,9 +371,7 @@ def execute_sql(state: SQLState):
 
             rows = result.fetchall()
 
-        # ----------------------------------------------------
         # NO RESULTS
-        # ----------------------------------------------------
 
         if not rows:
 
@@ -423,9 +379,7 @@ def execute_sql(state: SQLState):
                 "answer": "No results found."
             }
 
-        # ----------------------------------------------------
         # SINGLE VALUE
-        # ----------------------------------------------------
 
         if (
             len(rows) == 1
@@ -438,9 +392,7 @@ def execute_sql(state: SQLState):
                 "answer": f"The result is {value}."
             }
 
-        # ----------------------------------------------------
         # MULTIPLE RESULTS
-        # ----------------------------------------------------
 
         formatted_rows = [
             tuple(row)
@@ -464,9 +416,7 @@ def execute_sql(state: SQLState):
         }
 
 
-# ============================================================
 # LANGGRAPH
-# ============================================================
 
 graph = StateGraph(SQLState)
 

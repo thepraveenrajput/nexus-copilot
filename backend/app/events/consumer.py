@@ -75,7 +75,7 @@ def save_event(
     db.commit()
 
     print(
-        f"✅ Analytics event stored: {event_id}"
+        f" Analytics event stored: {event_id}"
     )
 
 
@@ -83,7 +83,7 @@ def consume_events():
     consumer = create_consumer()
 
     print(
-        "🔥 NexusCopilot Analytics Consumer started"
+        " NexusCopilot Analytics Consumer started"
     )
 
     print(

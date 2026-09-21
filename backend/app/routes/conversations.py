@@ -22,9 +22,7 @@ router = APIRouter(
 )
 
 
-# --------------------------------------------------
 # CREATE CONVERSATION
-# --------------------------------------------------
 
 @router.post("")
 def create_new_conversation(
@@ -42,9 +40,7 @@ def create_new_conversation(
     }
 
 
-# --------------------------------------------------
 # LIST USER CONVERSATIONS
-# --------------------------------------------------
 
 @router.get("")
 def list_conversations(
@@ -67,9 +63,7 @@ def list_conversations(
     ]
 
 
-# --------------------------------------------------
 # GET CONVERSATION MESSAGES
-# --------------------------------------------------
 
 @router.get("/{conversation_id}/messages")
 def list_conversation_messages(
@@ -111,9 +105,7 @@ def list_conversation_messages(
     ]
 
 
-# --------------------------------------------------
 # DELETE CONVERSATION
-# --------------------------------------------------
 
 @router.delete("/{conversation_id}")
 def remove_conversation(
