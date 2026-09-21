@@ -39,19 +39,19 @@
 
 ---
 
-## 🌟 What is NexusCopilot?
+# 🌟 What is NexusCopilot?
 
 **NexusCopilot** is an enterprise-style AI copilot designed to provide a unified conversational interface over:
 
-📚 **Enterprise documents**  
-🗄️ **Structured databases**  
-🔎 **Vector search**  
-🤖 **LLM-powered reasoning**  
-⚡ **Event-driven analytics**
+- 📚 **Enterprise documents**
+- 🗄️ **Structured databases**
+- 🔎 **Vector search**
+- 🤖 **LLM-powered reasoning**
+- ⚡ **Event-driven analytics**
 
 Instead of forcing users to manually search through documents and databases, NexusCopilot allows them to simply ask questions in natural language.
 
-### 💬 Example
+## 💬 Example
 
 ```text
 👤 How many employees are registered?
@@ -63,6 +63,7 @@ Instead of forcing users to manually search through documents and databases, Nex
 👤 How many days of annual leave are employees entitled to?
 
 🤖 Employees are entitled to 20 days of annual leave.
+
    📄 Source: Leave Policy
    📖 Page: 1
 ```
@@ -88,17 +89,17 @@ The third question demonstrates the **Hybrid SQL + RAG workflow**.
 Enterprise information usually exists in multiple places:
 
 ```text
-                🏢 Enterprise
-                     │
-        ┌────────────┼────────────┐
-        │            │            │
-        ▼            ▼            ▼
-   📄 Documents   🗄️ Database   📊 Reports
-        │            │            │
-        └────────────┼────────────┘
-                     ▼
-                🤯 Information
-                   Silos
+                 🏢 Enterprise
+                      │
+          ┌───────────┼───────────┐
+          │           │           │
+          ▼           ▼           ▼
+     📄 Documents  🗄️ Database  📊 Reports
+          │           │           │
+          └───────────┼───────────┘
+                      ▼
+                 🤯 Information
+                    Silos
 ```
 
 NexusCopilot creates a unified AI layer over these sources:
@@ -109,30 +110,24 @@ NexusCopilot creates a unified AI layer over these sources:
       ├──────────────┐
       │              │
       ▼              ▼
-   🔎 RAG         🗄️ SQL
+   🔎 RAG          🗄️ SQL
       │              │
       └──────┬───────┘
              ▼
-       🧠 AI Router
+        🧠 AI Router
              │
              ▼
-      💬 Unified Answer
+        💬 Unified Answer
 ```
 
 ---
 
 # 🏗️ System Architecture
 
-<div align="center">
-
-<img src="https://svgshare.com/i/16gD.svg" width="850"/>
-
-</div>
-
 ```text
                          👤 USER
-                           │
-                           ▼
+                            │
+                            ▼
                   ┌──────────────────┐
                   │   🖥️ Next.js UI  │
                   │ React + TypeScript│
@@ -140,8 +135,8 @@ NexusCopilot creates a unified AI layer over these sources:
                            │
                            ▼
                   ┌──────────────────┐
-                  │   ⚡ FastAPI     │
-                  │    REST API      │
+                  │   ⚡ FastAPI      │
+                  │    REST API       │
                   └────────┬─────────┘
                            │
                            ▼
@@ -164,13 +159,13 @@ NexusCopilot creates a unified AI layer over these sources:
         └──────────┘ └──────────┘ └──────┬─────┘
                                          │
                                          ▼
-                                  🧠 Synthesizer
+                                   🧠 Synthesizer
                                          │
                                          ▼
-                                  💬 Final Answer
+                                   💬 Final Answer
                                          │
                                          ▼
-                                  📚 Sources
+                                      📚 Sources
 ```
 
 ---
@@ -183,7 +178,7 @@ NexusCopilot creates a unified AI layer over these sources:
 
 ### 🧠 Agentic Routing
 
-Intelligently determines whether a question requires:
+Determines whether a question requires:
 
 - 🔎 RAG
 - 🗄️ SQL
@@ -272,19 +267,19 @@ Includes:
              📄 PDF / DOCX
                    │
                    ▼
-          📥 Document Upload
+           📥 Document Upload
                    │
                    ▼
-          📖 Text Extraction
+            📖 Text Extraction
                    │
                    ▼
-             ✂️ Chunking
+                  ✂️ Chunking
                    │
                    ▼
-           🧮 Embeddings
+               🧮 Embeddings
                    │
                    ▼
-          🔵 Qdrant Vector DB
+             🔵 Qdrant Vector DB
 ```
 
 The embedding model:
@@ -306,16 +301,16 @@ produces vector representations used for semantic retrieval.
              🧮 Embedding
                   │
                   ▼
-         🔎 Similarity Search
+          🔎 Similarity Search
                   │
                   ▼
-          📚 Top-K Chunks
+             📚 Top-K Chunks
                   │
                   ▼
-           🧠 LLM Context
+              🧠 LLM Context
                   │
                   ▼
-          💬 Grounded Answer
+             💬 Grounded Answer
 ```
 
 Each retrieved source contains metadata such as:
@@ -348,8 +343,8 @@ NexusCopilot can execute both workflows:
                     👤 Question
                          │
                          ▼
-                  🧠 LangGraph
-                     Router
+                   🧠 LangGraph
+                      Router
                          │
               ┌──────────┴──────────┐
               │                     │
@@ -357,14 +352,14 @@ NexusCopilot can execute both workflows:
          🗄️ SQL Agent           🔎 RAG Agent
               │                     │
               ▼                     ▼
-        PostgreSQL                Qdrant
+         PostgreSQL                Qdrant
               │                     │
               └──────────┬──────────┘
                          ▼
-                  🧠 Synthesizer
+                   🧠 Synthesizer
                          │
                          ▼
-                    💬 Answer
+                      💬 Answer
 ```
 
 This architecture allows NexusCopilot to combine structured and unstructured enterprise knowledge.
@@ -409,19 +404,19 @@ Authentication is implemented using JWT.
           👤 User
              │
              ▼
-        🔑 Login
+          🔑 Login
              │
              ▼
-       🎟️ JWT Token
+         🎟️ JWT Token
              │
              ▼
-      🔒 Protected API
+       🔒 Protected API
              │
              ▼
-       🛡️ RBAC Check
+        🛡️ RBAC Check
              │
              ▼
-       📦 User Resource
+        📦 User Resource
 ```
 
 ### Security Controls
@@ -444,23 +439,23 @@ Authentication is implemented using JWT.
 NexusCopilot uses Apache Kafka for event-driven analytics.
 
 ```text
-                    ⚡ FastAPI
-                        │
-                        ▼
-                 📤 Event Producer
-                        │
-                        ▼
-                 📨 Kafka Topic
-                  "chat-events"
-                        │
-                        ▼
-                 📥 Consumer
-                        │
-                        ▼
-                 📊 Analytics
-                        │
-                        ▼
-                  🗄️ PostgreSQL
+                     ⚡ FastAPI
+                         │
+                         ▼
+                  📤 Event Producer
+                         │
+                         ▼
+                  📨 Kafka Topic
+                   "chat-events"
+                         │
+                         ▼
+                  📥 Consumer
+                         │
+                         ▼
+                    📊 Analytics
+                         │
+                         ▼
+                    🗄️ PostgreSQL
 ```
 
 Kafka is separated from the main request/response path so analytics processing can operate independently.
@@ -487,7 +482,7 @@ Example:
 }
 ```
 
-### 🔎 Request Tracking
+## 🔎 Request Tracking
 
 Every request receives:
 
@@ -527,19 +522,19 @@ Docker Compose manages the local infrastructure:
 └────────────────────────────────────────────┘
 ```
 
-Start infrastructure:
+### Start infrastructure
 
 ```bash
 docker compose -f infrastructure/docker-compose.yml up -d
 ```
 
-Check:
+### Check infrastructure
 
 ```bash
 docker compose -f infrastructure/docker-compose.yml ps
 ```
 
-Stop:
+### Stop infrastructure
 
 ```bash
 docker compose -f infrastructure/docker-compose.yml stop
@@ -592,35 +587,29 @@ nexus-copilot/
 │       └── ⚙️ ci.yml
 │
 ├── 📂 backend/
-│   │
 │   ├── 📂 app/
 │   │   ├── 📂 agents/
 │   │   │   ├── 🧠 rag_agent.py
 │   │   │   ├── 🗄️ sql_agent.py
 │   │   │   └── 🔀 router.py
-│   │   │
 │   │   ├── 📂 core/
 │   │   │   ├── ⚙️ config.py
 │   │   │   └── 📝 logging.py
-│   │   │
 │   │   ├── 📂 db/
 │   │   │   ├── 🐘 postgres.py
 │   │   │   ├── 🔵 qdrant.py
 │   │   │   └── 🧮 embeddings.py
-│   │   │
 │   │   ├── 📂 events/
 │   │   │   └── ⚡ producer.py
-│   │   │
 │   │   ├── 📂 models/
 │   │   ├── 📂 routes/
 │   │   ├── 📂 services/
 │   │   └── 🚀 main.py
-│   │
-│   ├── 🧪 tests/
-│   │   └── test_rag_evaluation.py
-│   │
-│   ├── 🐳 Dockerfile
-│   └── 📦 requirements.txt
+│   └── 🧪 tests/
+│       └── test_rag_evaluation.py
+│
+├── 🐳 backend/Dockerfile
+├── 📦 backend/requirements.txt
 │
 ├── 📂 frontend/
 │   ├── 📂 src/
@@ -647,11 +636,15 @@ git clone https://github.com/thepraveenrajput/nexus-copilot.git
 cd nexus-copilot
 ```
 
+---
+
 ## 2️⃣ Start Infrastructure
 
 ```bash
 docker compose -f infrastructure/docker-compose.yml up -d
 ```
+
+---
 
 ## 3️⃣ Setup Backend
 
@@ -665,7 +658,11 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+---
+
 ## 4️⃣ Configure Environment
+
+> ⚠️ The following values are development examples. Do not commit real secrets.
 
 Create:
 
@@ -696,13 +693,19 @@ QDRANT_COLLECTION=nexus_documents
 OLLAMA_MODEL=qwen2.5:1.5b
 ```
 
+---
+
 ## 5️⃣ Start Ollama
 
 ```bash
 ollama pull qwen2.5:1.5b
 ```
 
+---
+
 ## 6️⃣ Start Backend
+
+From the `backend` directory:
 
 ```bash
 uvicorn app.main:app --reload
@@ -713,6 +716,8 @@ Backend:
 ```text
 http://localhost:8000
 ```
+
+---
 
 ## 7️⃣ Start Frontend
 
@@ -770,7 +775,7 @@ NexusCopilot uses GitHub Actions.
                      📦 Git Push
                          │
                          ▼
-                  ⚡ GitHub Actions
+                   ⚡ GitHub Actions
                          │
               ┌──────────┴──────────┐
               │                     │
@@ -778,10 +783,10 @@ NexusCopilot uses GitHub Actions.
         🐍 Backend              ⚛️ Frontend
               │                     │
               ▼                     ▼
-       Compile Python            npm ci
+       Compile Python             npm ci
                                     │
                                     ▼
-                               npm build
+                                npm build
 ```
 
 Workflow:
@@ -805,31 +810,31 @@ NexusCopilot demonstrates concepts across multiple engineering layers:
 
 ```text
                  🧠 AI ENGINEERING
-                       │
-          ┌────────────┼────────────┐
-          │            │            │
-         RAG        Agents       LLMs
-          │            │            │
-          └────────────┼────────────┘
-                       │
-                       ▼
-              ⚙️ BACKEND ENGINEERING
-                       │
-          ┌────────────┼────────────┐
-          │            │            │
-       FastAPI      PostgreSQL    Auth
-          │            │            │
-          └────────────┼────────────┘
-                       │
-                       ▼
-              ⚡ DISTRIBUTED SYSTEMS
-                       │
+                        │
+            ┌───────────┼───────────┐
+            │           │           │
+           RAG        Agents       LLMs
+            │           │           │
+            └───────────┼───────────┘
+                        │
+                        ▼
+               ⚙️ BACKEND ENGINEERING
+                        │
+            ┌───────────┼───────────┐
+            │           │           │
+         FastAPI    PostgreSQL     Auth
+            │           │           │
+            └───────────┼───────────┘
+                        │
+                        ▼
+               ⚡ DISTRIBUTED SYSTEMS
+                        │
                    Kafka Events
-                       │
-                       ▼
-                 🐳 DEVOPS
-                       │
-             Docker + GitHub Actions
+                        │
+                        ▼
+                    🐳 DEVOPS
+                        │
+               Docker + GitHub Actions
 ```
 
 ---
@@ -838,18 +843,18 @@ NexusCopilot demonstrates concepts across multiple engineering layers:
 
 The project was designed to understand how modern AI systems are built beyond simply calling an LLM API.
 
-### 🧠 AI / ML
+## 🧠 AI / ML
 
 - Embeddings
 - Vector search
-- RAG
+- Retrieval-Augmented Generation (RAG)
 - Semantic retrieval
 - LLM integration
 - Agent workflows
 - LangGraph
 - Grounded generation
 
-### ⚙️ Backend
+## ⚙️ Backend
 
 - REST API design
 - FastAPI
@@ -862,7 +867,7 @@ The project was designed to understand how modern AI systems are built beyond si
 - Health checks
 - Request tracing
 
-### ⚡ Distributed Systems
+## ⚡ Distributed Systems
 
 - Apache Kafka
 - Event-driven architecture
@@ -870,7 +875,7 @@ The project was designed to understand how modern AI systems are built beyond si
 - Consumers
 - Analytics pipelines
 
-### 🐳 DevOps
+## 🐳 DevOps
 
 - Docker
 - Docker Compose
@@ -913,18 +918,18 @@ The project was designed to understand how modern AI systems are built beyond si
                  Current
                     │
                     ▼
-              🧠 NexusCopilot
+               🧠 NexusCopilot
                     │
-          ┌─────────┼─────────┐
-          │         │         │
-          ▼         ▼         ▼
-       ☁️ Cloud   📊 Eval   ⚡ Scale
-          │         │         │
-          ▼         ▼         ▼
-       Azure     RAG Eval   Caching
+            ┌───────┼───────┐
+            │       │       │
+            ▼       ▼       ▼
+         ☁️ Cloud  📊 Eval  ⚡ Scale
+            │       │       │
+            ▼       ▼       ▼
+         Azure   RAG Eval  Caching
                     │
                     ▼
-             Advanced Agents
+              Advanced Agents
 ```
 
 Potential future improvements:
@@ -948,8 +953,7 @@ Potential future improvements:
 
 ## Praveen Singh
 
-**B.Tech Computer Science & Engineering**  
-
+**B.Tech Computer Science & Engineering**
 
 <br/>
 
@@ -971,6 +975,6 @@ Potential future improvements:
 
 <br/>
 
-**Built with ❤️ using  Software Engineering**
+**Built with ❤️ using modern software engineering practices**
 
 </div>
