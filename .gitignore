@@ -1,0 +1,70 @@
+# macOS
+.DS_Store
+
+# Environment files
+.env
+.env.*
+!.env.example
+!.env.local.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Python tooling
+.mypy_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+.next/
+out/
+dist/
+
+# Frontend environment files
+frontend/.env.local
+frontend/.env.*.local
+
+# Backend environment files
+backend/.env
+backend/.env.*
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Qdrant / local data
+qdrant_storage/
+
+# Uploaded/generated files
+uploads/
+storage/
+
+# Local development test files
+backend/app/db/*_test.py
+backend/app/db/test_*.py
+backend/app/services/test_*.py
+backend/app/services/create_test_pdf.py
+backend/test_policy.pdf
+
+backend/app/db/reset_qdrant.py
+backend/app/db/semantic_search.py
